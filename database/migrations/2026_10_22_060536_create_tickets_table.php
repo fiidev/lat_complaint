@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('complaint_id')->unique()->contrained()->cascadeOnDelete();
-            $table->foreignId('assigned_to')->contrained('users')->cascadeOnDelete();
-            $table->foreignId('created_by')->contrained('users')->cascadeOnDelete();
-            $table->string('ticket_number');
+            $table->foreignId('complaint_id')->unique()->constrained('complaints')->cascadeOnDelete();
+            $table->foreignId('assigned_to')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->string('ticket_number')->unique();
             $table->string('priority');
-            $table->enum('status', ['open', 'in_progress', 'resolved'])->deafult('open');
+            $table->enum('status', ['open', 'in_progress', 'resolved'])->default('open');
             $table->text('resolution_notes')->nullable();
-            $table->date('resolved_at')->nullable();
+            $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
         });
     }

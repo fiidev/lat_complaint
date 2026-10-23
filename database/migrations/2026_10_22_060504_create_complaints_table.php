@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->contrained()->cascadeOnDelete();
-            $table->foreignId('category_id')->contrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('complaint_categories')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
             $table->string('evidence_image')->nullable();
-            $table->enum('status', ['rejected', 'accepted', 'submitted'])->deafult('submitted');
+            $table->enum('status', ['submitted', 'accepted', 'rejected'])->default('submitted');
             $table->text('rejection_reason')->nullable();
             $table->timestamps();
         });

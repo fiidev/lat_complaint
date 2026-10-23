@@ -1,0 +1,19 @@
+meta {
+  name: Get Complaint Detail
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/complaints/{{complaint_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+}

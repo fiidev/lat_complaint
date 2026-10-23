@@ -8,15 +8,7 @@ use Illuminate\Http\Request;
 class ComplaintController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Submit a new complaint.
      */
     public function store(Request $request)
     {
@@ -46,9 +38,74 @@ class ComplaintController extends Controller
             'message' => 'Complaint submitted successfully.',
             'data' => $complaint->only(['id', 'title', 'status', 'evidence_image']),
         ], 201);
-
     }
 
+    /**
+     * List current user's own complaints.
+     */
+    public function myComplaints(Request $request)
+    {
+        $complaints = Complaint::with(['room', 'category', 'ticket'])
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'message' => 'Own complaints retrieved successfully.',
+            'data' => $complaints,
+        ]);
+    }
+
+    /**
+     * View a single complaint (Owner or Admin only).
+     */
+    public function show(Request $request, $id)
+    {
+        $complaint = Complaint::with(['room', 'category', 'ticket'])->findOrFail($id);
+        $user = $request->user();
+
+        if ($user->role !== 'admin' && $complaint->user_id !== $user->id) {
+            return response()->json([
+                'message' => 'You are not authorized to view this complaint.',
+            ], 403);
+        }
+
+        return response()->json([
+            'message' => 'Complaint retrieved successfully.',
+            'data' => $complaint,
+        ]);
+    }
+
+    /**
+     * Admin: List and filter all complaints.
+     */
+    public function adminIndex(Request $request)
+    {
+        $query = Complaint::with(['user:id,name,email,role', 'room', 'category', 'ticket']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->room_id);
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $complaints = $query->latest()->get();
+
+        return response()->json([
+            'message' => 'All complaints retrieved successfully.',
+            'data' => $complaints,
+        ]);
+    }
+
+    /**
+     * Admin: Accept complaint.
+     */
     public function accept($id)
     {
         $complaint = Complaint::findOrFail($id);
@@ -67,6 +124,9 @@ class ComplaintController extends Controller
         ]);
     }
 
+    /**
+     * Admin: Reject complaint with reason.
+     */
     public function reject(Request $request, $id)
     {
         $data = $request->validate([

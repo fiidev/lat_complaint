@@ -1,0 +1,32 @@
+meta {
+  name: Submit Complaint
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/complaints
+  body: multipartForm
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:multipart-form {
+  room_id: 1
+  category_id: 1
+  title: Stop kontak meja depan berasap dan korslet
+  description: Terdapat percikan api saat kabel laptop dicolokkan ke stop kontak baris depan.
+}
+
+script:post-response {
+  if (res.body && res.body.data && res.body.data.id) {
+    bru.setEnvVar("complaint_id", res.body.data.id);
+  }
+}

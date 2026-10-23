@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ticket_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->contrained('tickets')->cascadeOnDelete();
-            $table->foreignId('user_id')->contrained()->cascadeOnDelete();
+            $table->foreignId('ticket_id')->constrained('tickets')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('old_status')->nullable();
             $table->string('new_status')->nullable();
             $table->text('note')->nullable();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ticket_categories');
+        Schema::dropIfExists('ticket_histories');
     }
 };

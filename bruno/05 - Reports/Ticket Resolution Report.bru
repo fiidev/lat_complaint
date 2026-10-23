@@ -1,0 +1,24 @@
+meta {
+  name: Ticket Resolution Report
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/admin/reports/tickets/resolution?start_date=2026-09-01&end_date=2026-12-31
+  body: none
+  auth: bearer
+}
+
+params:query {
+  start_date: 2026-09-01
+  end_date: 2026-12-31
+}
+
+auth:bearer {
+  token: {{admin_token}}
+}
+
+headers {
+  Accept: application/json
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Admin - Get All Complaints
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/admin/complaints
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{admin_token}}
+}
+
+headers {
+  Accept: application/json
+}

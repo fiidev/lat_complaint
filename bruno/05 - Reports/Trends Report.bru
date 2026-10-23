@@ -1,0 +1,25 @@
+meta {
+  name: Trends Report
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/admin/reports/complaints/trends?start_date=2026-09-01&end_date=2026-12-31&group_by=day
+  body: none
+  auth: bearer
+}
+
+params:query {
+  start_date: 2026-09-01
+  end_date: 2026-12-31
+  group_by: day
+}
+
+auth:bearer {
+  token: {{admin_token}}
+}
+
+headers {
+  Accept: application/json
+}

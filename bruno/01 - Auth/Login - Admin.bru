@@ -1,0 +1,30 @@
+meta {
+  name: Login - Admin
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "admin@admin.com",
+    "password": "admin123"
+  }
+}
+
+script:post-response {
+  if (res.body && res.body.data && res.body.data.token) {
+    bru.setEnvVar("admin_token", res.body.data.token);
+    bru.setEnvVar("token", res.body.data.token);
+  }
+}

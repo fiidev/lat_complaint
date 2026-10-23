@@ -11,15 +11,7 @@ use Illuminate\Support\Facades\DB;
 class TicketController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Admin: Create and assign a ticket for an accepted complaint.
      */
     public function store(Request $request, $id)
     {
@@ -46,7 +38,7 @@ class TicketController extends Controller
                 'complaint_id' => $complaint->id,
                 'assigned_to' => $v['assigned_to'],
                 'created_by' => $request->user()->id,
-                'ticket_number' => 'MOK-TKT-'.now()->format('Y').'-'.mt_rand(5, 99999),
+                'ticket_number' => 'MOK-TKT-'.now()->format('Y').'-'.mt_rand(1000, 99999),
                 'priority' => $v['priority'],
                 'status' => 'open',
             ]);
@@ -69,13 +61,56 @@ class TicketController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Staff: List tickets assigned to the authenticated staff member.
      */
-    public function show(string $id)
+    public function myTickets(Request $request)
     {
-        //
+        $tickets = Ticket::with(['complaint.room', 'complaint.category', 'complaint.user:id,name,email'])
+            ->where('assigned_to', $request->user()->id)
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'message' => 'Assigned tickets retrieved successfully.',
+            'data' => $tickets,
+        ]);
     }
 
+    /**
+     * View a single ticket (Assigned staff, admin, or complaint owner).
+     */
+    public function show(Request $request, $id)
+    {
+        $ticket = Ticket::with([
+            'complaint.room',
+            'complaint.category',
+            'complaint.user:id,name,email',
+            'assignee:id,name,email',
+            'creator:id,name,email',
+            'histories.user:id,name,role',
+        ])->findOrFail($id);
+
+        $user = $request->user();
+
+        $isAuthorized = $user->role === 'admin'
+            || $ticket->assigned_to === $user->id
+            || $ticket->complaint->user_id === $user->id;
+
+        if (! $isAuthorized) {
+            return response()->json([
+                'message' => 'You are not authorized to view this ticket.',
+            ], 403);
+        }
+
+        return response()->json([
+            'message' => 'Ticket retrieved successfully.',
+            'data' => $ticket,
+        ]);
+    }
+
+    /**
+     * Staff: Start work on a ticket.
+     */
     public function start(Request $request, $id)
     {
         $data = $request->validate(['note' => 'nullable|string']);
@@ -95,7 +130,6 @@ class TicketController extends Controller
             $oldStatus = $ticket->status;
             $ticket->update(['status' => 'in_progress']);
 
-
             TicketHistory::create([
                 'ticket_id' => $ticket->id,
                 'user_id' => $request->user()->id,
@@ -111,6 +145,9 @@ class TicketController extends Controller
         ]);
     }
 
+    /**
+     * Staff: Resolve a ticket with resolution notes.
+     */
     public function resolve(Request $request, $id)
     {
         $data = $request->validate(['resolution_notes' => 'required|string']);
@@ -128,12 +165,14 @@ class TicketController extends Controller
             ], 409);
         }
 
-        DB::transaction(function () use ($ticket, $data, $request) {
+        $resolvedAt = now();
+
+        DB::transaction(function () use ($ticket, $data, $request, $resolvedAt) {
             $oldStatus = $ticket->status;
             $ticket->update([
                 'status' => 'resolved',
                 'resolution_notes' => $data['resolution_notes'],
-                'resolved_at' => now(),
+                'resolved_at' => $resolvedAt,
             ]);
 
             TicketHistory::create([
@@ -151,33 +190,73 @@ class TicketController extends Controller
                 'id' => $ticket->id,
                 'status' => $ticket->status,
                 'resolution_notes' => $ticket->resolution_notes,
-                'resolved_at' => $ticket->resolved_at,
+                'resolved_at' => $resolvedAt->toIso8601String(),
             ],
         ]);
     }
 
+    /**
+     * Add progress note to a ticket (Assigned staff or admin).
+     */
     public function history(Request $req, $id)
     {
         $v = $req->validate([
-            'notes' => 'required|string',
+            'note' => 'required|string',
         ]);
 
-        $ticket = TicketHistory::findOrFail($id);
-
+        $ticket = Ticket::findOrFail($id);
         $user = $req->user();
 
-        if ($user->role == "admin" || $ticket->assigned_to !== $request->user()->id) {
+        if ($user->role !== 'admin' && $ticket->assigned_to !== $user->id) {
             return response()->json([
-                'message' => 'Only the assigned staff and admin can start this ticket.',
+                'message' => 'Only the assigned staff and admin can add progress notes to this ticket.',
             ], 403);
         }
 
+        $history = TicketHistory::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => $user->id,
+            'note' => $v['note'],
+            'old_status' => null,
+            'new_status' => null,
+        ]);
 
         return response()->json([
             'message' => 'Progress note added successfully.',
             'data' => [
                 'ticket_id' => $ticket->id,
+                'user_id' => $user->id,
+                'note' => $history->note,
             ],
+        ], 201);
+    }
+
+    /**
+     * View history/timeline of a ticket (Authorized users).
+     */
+    public function getHistories(Request $request, $id)
+    {
+        $ticket = Ticket::with('complaint')->findOrFail($id);
+        $user = $request->user();
+
+        $isAuthorized = $user->role === 'admin'
+            || $ticket->assigned_to === $user->id
+            || $ticket->complaint->user_id === $user->id;
+
+        if (! $isAuthorized) {
+            return response()->json([
+                'message' => 'You are not authorized to view this ticket history.',
+            ], 403);
+        }
+
+        $histories = $ticket->histories()
+            ->with('user:id,name,role')
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'message' => 'Ticket histories retrieved successfully.',
+            'data' => $histories,
         ]);
     }
 }

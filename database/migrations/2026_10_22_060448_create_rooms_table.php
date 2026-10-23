@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('building')->unique();
-            $table->string('room_number')->unique();
+            $table->string('building');
+            $table->string('room_number');
             $table->string('name');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+
+            $table->unique(['building', 'room_number']);
         });
     }
 

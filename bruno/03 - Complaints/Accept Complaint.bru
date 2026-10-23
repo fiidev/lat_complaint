@@ -1,0 +1,19 @@
+meta {
+  name: Admin - Accept Complaint
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{base_url}}/admin/complaints/{{complaint_id}}/accept
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{admin_token}}
+}
+
+headers {
+  Accept: application/json
+}

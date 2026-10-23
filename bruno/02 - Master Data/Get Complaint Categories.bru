@@ -1,0 +1,19 @@
+meta {
+  name: Get Complaint Categories
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/complaint-categories
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+}

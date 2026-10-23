@@ -1,0 +1,19 @@
+meta {
+  name: Get Ticket Detail
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/tickets/{{ticket_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+}
