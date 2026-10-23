@@ -13,12 +13,8 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Rooms
         $rooms = [
             ['building' => 'Gedung A', 'room_number' => 'A-101', 'name' => 'Lab Komputer 1', 'is_active' => true],
             ['building' => 'Gedung A', 'room_number' => 'A-102', 'name' => 'Lab Komputer 2', 'is_active' => true],
@@ -31,7 +27,6 @@ class DatabaseSeeder extends Seeder
             Room::firstOrCreate(['building' => $room['building'], 'room_number' => $room['room_number']], $room);
         }
 
-        // Complaint Categories
         $categories = [
             ['name' => 'Kelistrikan', 'description' => 'Masalah stop kontak, lampu mati, MCB turun, dsb.', 'is_active' => true],
             ['name' => 'Jaringan & Internet', 'description' => 'Masalah kabel LAN, access point / WiFi, router.', 'is_active' => true],
@@ -43,7 +38,6 @@ class DatabaseSeeder extends Seeder
             ComplaintCategory::firstOrCreate(['name' => $category['name']], $category);
         }
 
-        // Users
         $users = [
             [
                 'name' => 'Administrator',

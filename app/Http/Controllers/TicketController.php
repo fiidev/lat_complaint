@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
-    /**
-     * Admin: Create and assign a ticket for an accepted complaint.
-     */
     public function store(Request $request, $id)
     {
         $v = $request->validate([
@@ -60,9 +57,6 @@ class TicketController extends Controller
         ], 201);
     }
 
-    /**
-     * Staff: List tickets assigned to the authenticated staff member.
-     */
     public function myTickets(Request $request)
     {
         $tickets = Ticket::with(['complaint.room', 'complaint.category', 'complaint.user:id,name,email'])
@@ -76,9 +70,6 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
-     * View a single ticket (Assigned staff, admin, or complaint owner).
-     */
     public function show(Request $request, $id)
     {
         $ticket = Ticket::with([
@@ -108,9 +99,6 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
-     * Staff: Start work on a ticket.
-     */
     public function start(Request $request, $id)
     {
         $data = $request->validate(['note' => 'nullable|string']);
@@ -145,9 +133,6 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
-     * Staff: Resolve a ticket with resolution notes.
-     */
     public function resolve(Request $request, $id)
     {
         $data = $request->validate(['resolution_notes' => 'required|string']);
@@ -195,9 +180,6 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
-     * Add progress note to a ticket (Assigned staff or admin).
-     */
     public function history(Request $req, $id)
     {
         $v = $req->validate([
@@ -231,9 +213,6 @@ class TicketController extends Controller
         ], 201);
     }
 
-    /**
-     * View history/timeline of a ticket (Authorized users).
-     */
     public function getHistories(Request $request, $id)
     {
         $ticket = Ticket::with('complaint')->findOrFail($id);

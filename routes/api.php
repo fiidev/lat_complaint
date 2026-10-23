@@ -9,35 +9,28 @@ use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
-    // Public routes
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
 
-    // Authenticated routes
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-        // Master Data
         Route::get('/rooms', RoomController::class);
         Route::get('/complaint-categories', ComplaintCategoryController::class);
 
-        // Complaints (General / Reporter)
         Route::post('/complaints', [ComplaintController::class, 'store']);
         Route::get('/me/complaints', [ComplaintController::class, 'myComplaints']);
         Route::get('/complaints/{id}', [ComplaintController::class, 'show']);
 
-        // Tickets (Show & Histories checked by authorization in controller)
         Route::get('/tickets/{id}', [TicketController::class, 'show']);
         Route::get('/tickets/{id}/histories', [TicketController::class, 'getHistories']);
 
-        // Admin Only
         Route::middleware('role:admin')->group(function () {
             Route::get('/admin/complaints', [ComplaintController::class, 'adminIndex']);
             Route::patch('/admin/complaints/{id}/accept', [ComplaintController::class, 'accept']);
             Route::patch('/admin/complaints/{id}/reject', [ComplaintController::class, 'reject']);
             Route::post('/admin/complaints/{id}/tickets', [TicketController::class, 'store']);
 
-            // Reports
             Route::get('/admin/reports/complaints/summary', [ReportController::class, 'summary']);
             Route::get('/admin/reports/complaints/by-category', [ReportController::class, 'byCategory']);
             Route::get('/admin/reports/complaints/by-room', [ReportController::class, 'byRoom']);
@@ -45,14 +38,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/admin/reports/tickets/resolution', [ReportController::class, 'resolution']);
         });
 
-        // Staff Only
         Route::middleware('role:staff')->group(function () {
             Route::get('/me/tickets', [TicketController::class, 'myTickets']);
             Route::patch('/tickets/{id}/start', [TicketController::class, 'start']);
             Route::patch('/tickets/{id}/resolve', [TicketController::class, 'resolve']);
         });
 
-        // Staff & Admin
         Route::middleware('role:staff,admin')->group(function () {
             Route::post('/tickets/{id}/histories', [TicketController::class, 'history']);
         });

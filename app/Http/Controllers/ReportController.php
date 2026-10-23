@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    /**
-     * 1. Summary Report: total complaints, by status, and tickets in scope.
-     */
     public function summary(Request $request)
     {
         $request->validate([
@@ -49,9 +46,6 @@ class ReportController extends Controller
         ]);
     }
 
-    /**
-     * 2. By Category Report: total complaints grouped by category.
-     */
     public function byCategory(Request $request)
     {
         $request->validate([
@@ -76,9 +70,6 @@ class ReportController extends Controller
         ]);
     }
 
-    /**
-     * 3. By Room Report: total complaints grouped by room.
-     */
     public function byRoom(Request $request)
     {
         $request->validate([
@@ -105,9 +96,6 @@ class ReportController extends Controller
         ]);
     }
 
-    /**
-     * 4. Trends Report: complaints trend grouped by day or month.
-     */
     public function trends(Request $request)
     {
         $request->validate([
@@ -135,9 +123,6 @@ class ReportController extends Controller
         ]);
     }
 
-    /**
-     * 5. Resolution Report: ticket status counts & resolution time metrics.
-     */
     public function resolution(Request $request)
     {
         $request->validate([

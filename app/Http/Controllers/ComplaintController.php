@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
-    /**
-     * Submit a new complaint.
-     */
     public function store(Request $request)
     {
         $v = $request->validate([
@@ -40,9 +37,6 @@ class ComplaintController extends Controller
         ], 201);
     }
 
-    /**
-     * List current user's own complaints.
-     */
     public function myComplaints(Request $request)
     {
         $complaints = Complaint::with(['room', 'category', 'ticket'])
@@ -56,9 +50,6 @@ class ComplaintController extends Controller
         ]);
     }
 
-    /**
-     * View a single complaint (Owner or Admin only).
-     */
     public function show(Request $request, $id)
     {
         $complaint = Complaint::with(['room', 'category', 'ticket'])->findOrFail($id);
@@ -76,9 +67,6 @@ class ComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Admin: List and filter all complaints.
-     */
     public function adminIndex(Request $request)
     {
         $query = Complaint::with(['user:id,name,email,role', 'room', 'category', 'ticket']);
@@ -103,9 +91,6 @@ class ComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Admin: Accept complaint.
-     */
     public function accept($id)
     {
         $complaint = Complaint::findOrFail($id);
@@ -124,9 +109,6 @@ class ComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Admin: Reject complaint with reason.
-     */
     public function reject(Request $request, $id)
     {
         $data = $request->validate([
