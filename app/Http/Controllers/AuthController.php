@@ -70,6 +70,9 @@ class AuthController extends Controller
             $q->where('role', $req->role);
         }
     
-        return response()->json($q->get());
+        return response()->json([
+            'message' => 'Get Users Successfully',
+            'data' => $q->get()
+        ]);
     }
 }
