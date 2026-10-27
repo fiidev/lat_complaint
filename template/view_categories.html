@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Categories - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <a href="view_rooms.html">Rooms</a>
+    <a href="view_categories.html">Categories</a>
+    <a href="view_complaints.html">Complaints</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap">
+    <div class="l-main-article">
+      <a href="add_category.html" class="button">+ Add New Category</a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kerusakan Fasilitas AC</td>
+            <td>Keluhan pendingin ruangan mati atau bocor</td>
+            <td><span class="badge badge-success">Active</span></td>
+            <td>
+              <a href="update_category.html" class="button">Update</a>
+              <button>Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Jaringan / Wifi Lambat</td>
+            <td>Kendala internet putus-putus di dalam ruangan</td>
+            <td><span class="badge badge-success">Active</span></td>
+            <td>
+              <a href="update_category.html" class="button">Update</a>
+              <button>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Complaint - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <a href="view_rooms.html">Rooms</a>
+    <a href="view_categories.html">Categories</a>
+    <a href="view_complaints.html">Complaints</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap" style="max-width: 600px;">
+    <div class="l-main-article">
+      <h2>Submit New Complaint</h2>
+      <form action="complaints" method="POST" enctype="multipart/form-data">
+        <div class="group">
+          <span>Target Room</span>
+          <select name="room_id" required>
+            <option value="">-- Select Room --</option>
+            <option value="1">Lab Komputer 1 (Gedung A - 101)</option>
+            <option value="2">Ruang Teori RPL (Gedung B - 204)</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <span>Complaint Category</span>
+          <select name="category_id" required>
+            <option value="">-- Select Category --</option>
+            <option value="1">Kerusakan Fasilitas AC</option>
+            <option value="2">Jaringan / Wifi Lambat</option>
+            <option value="3">Kelistrikan</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <span>Complaint Title</span>
+          <input type="text" name="title" placeholder="Contoh: AC Mati dan Mengeluarkan Bau" required>
+        </div>
+
+        <div class="group">
+          <span>Detail Description</span>
+          <textarea name="description" rows="4" placeholder="Jelaskan detail kerusakan yang terjadi..." required></textarea>
+        </div>
+
+        <div class="group">
+          <span>Evidence Image (Photo)</span>
+          <input type="file" name="evidence_image" accept="image/*">
+        </div>
+
+        <div>
+          <button type="submit">Submit Complaint</button>
+          <a href="view_complaints.html" class="button" style="background: #777;">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

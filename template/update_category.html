@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Category - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <a href="view_rooms.html">Rooms</a>
+    <a href="view_categories.html">Categories</a>
+    <a href="view_complaints.html">Complaints</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap" style="max-width: 600px;">
+    <div class="l-main-article">
+      <h2>Update Category</h2>
+      <form action="complaint-categories/1" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="group">
+          <span>Category Name</span>
+          <input type="text" name="name" value="Kerusakan Fasilitas AC" required>
+        </div>
+
+        <div class="group">
+          <span>Description</span>
+          <textarea name="description" rows="3">Keluhan pendingin ruangan mati atau bocor</textarea>
+        </div>
+
+        <div class="group">
+          <label>
+            <input type="checkbox" name="is_active" checked> Is Active Category
+          </label>
+        </div>
+
+        <div>
+          <button type="submit">Update Category</button>
+          <a href="view_categories.html" class="button" style="background: #777;">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

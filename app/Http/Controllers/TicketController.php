@@ -213,7 +213,7 @@ class TicketController extends Controller
         ], 201);
     }
 
-    public function getHistories(Request $request, $id)
+    public function getHistories(Request $request, string $id)
     {
         $ticket = Ticket::with('complaint')->findOrFail($id);
         $user = $request->user();
