@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <h1>Complaint Ticketing System</h1>
+  </div>
+
+  <div class="l-wrap" style="max-width: 450px;">
+    <div class="l-main-article">
+      <h2>Create New Account</h2>
+      <form action="register" method="POST">
+        <div class="group">
+          <span>Full Name</span>
+          <input type="text" name="name" placeholder="Enter full name" required>
+        </div>
+
+        <div class="group">
+          <span>Username</span>
+          <input type="text" name="username" placeholder="Choose username" required>
+        </div>
+
+        <div class="group">
+          <span>Password</span>
+          <input type="password" name="password" placeholder="Enter password (min. 6 chars)" required>
+        </div>
+
+        <div>
+          <button type="submit">Register Now</button>
+          <a href="login.html" class="button" style="background: #777;">Back to Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

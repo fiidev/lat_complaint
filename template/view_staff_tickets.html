@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Work Order Tickets - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <span>Staff Dashboard</span>
+    <a href="view_staff_tickets.html">My Work Orders</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap">
+    <div class="l-main-article">
+      <h2>My Assigned Work Tickets</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Ticket No.</th>
+            <th>Complaint Details</th>
+            <th>Room</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Tiket Baru Masuk (Open): Tombol Start -->
+          <tr>
+            <td><strong>MOK-TKT-2026-4821</strong></td>
+            <td>Kabel Proyektor Konslet</td>
+            <td>Ruang Teori RPL</td>
+            <td><span class="badge badge-warning">Medium</span></td>
+            <td><span class="badge" style="background: #e2e3e5;">Open</span></td>
+            <td>
+              <button style="background: #007bff; margin: 0;">Start Working</button>
+            </td>
+          </tr>
+
+          <!-- Tiket Sedang Dikerjakan (In Progress): Tombol Resolve & Add Note -->
+          <tr>
+            <td><strong>MOK-TKT-2026-1192</strong></td>
+            <td>AC Bocor Air Menetes</td>
+            <td>Lab Komputer 1</td>
+            <td><span class="badge badge-danger">High</span></td>
+            <td><span class="badge" style="background: #cce5ff; color: #004085;">In Progress</span></td>
+            <td>
+              <button style="background: #28a745; margin-right: 4px;">Resolve Ticket</button>
+              <button style="background: #6c757d;">+ Note</button>
+            </td>
+          </tr>
+
+          <!-- Tiket Selesai (Resolved) -->
+          <tr>
+            <td><strong>MOK-TKT-2026-8834</strong></td>
+            <td>Stopkontak Meja Guru Rusak</td>
+            <td>Ruang Guru A</td>
+            <td><span class="badge badge-warning">Low</span></td>
+            <td><span class="badge badge-success">Resolved</span></td>
+            <td>
+              <small style="color: #28a745; font-weight: bold;">Completed</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Review Complaints - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <a href="view_rooms.html">Rooms</a>
+    <a href="view_categories.html">Categories</a>
+    <a href="view_admin_complaints.html">Review Complaints</a>
+    <a href="view_reports.html">Reports</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap">
+    <div class="l-main-article">
+      <h2>Incoming Complaints Review</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Pelapor</th>
+            <th>Ruangan</th>
+            <th>Kategori</th>
+            <th>Judul & Bukti</th>
+            <th>Status</th>
+            <th>Aksi Peninjauan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Kasus 1: Status Submitted (Bisa di-Accept atau di-Reject) -->
+          <tr>
+            <td>#101</td>
+            <td>Budi Santoso</td>
+            <td>Lab Komputer 1</td>
+            <td>Fasilitas AC</td>
+            <td>
+              <strong>AC Bocor Air Menetes</strong><br>
+              <a href="evidence_sample.jpg" target="_blank" style="font-size: 12px;">Lihat Foto Bukti</a>
+            </td>
+            <td><span class="badge badge-warning">Submitted</span></td>
+            <td>
+              <button style="background: #28a745; margin-right: 4px;">Accept</button>
+              <button style="background: #dc3545;" onclick="this.nextElementSibling.style.display='block'">Reject</button>
+              <!-- Form input alasan penolakan -->
+              <div style="display: none; margin-top: 8px;">
+                <input type="text" placeholder="Alasan penolakan..." style="padding: 4px; font-size: 12px; width: 100%;">
+                <button style="background: #dc3545; font-size: 11px; padding: 4px 8px; margin-top: 4px;">Confirm Reject</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Kasus 2: Status Accepted (Bisa dibuatkan Tiket Penanganan ke Staff) -->
+          <tr>
+            <td>#102</td>
+            <td>Siti Aminah</td>
+            <td>Ruang Teori RPL</td>
+            <td>Kelistrikan</td>
+            <td>
+              <strong>Kabel Proyektor Konslet</strong><br>
+              <small class="text-muted">Tidak ada foto</small>
+            </td>
+            <td><span class="badge badge-success">Accepted</span></td>
+            <td>
+              <a href="create_ticket.html?complaint_id=102" class="button" style="background: #17a2b8; margin: 0;">+ Assign Ticket</a>
+            </td>
+          </tr>
+
+          <!-- Kasus 3: Status Rejected -->
+          <tr>
+            <td>#103</td>
+            <td>Ahmad Dhani</td>
+            <td>Perpustakaan</td>
+            <td>Kebersihan</td>
+            <td><strong>Sampah Menumpuk</strong></td>
+            <td><span class="badge badge-danger">Rejected</span></td>
+            <td>
+              <small style="color: #c00;">Alasan: Bukan ranah teknisi</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

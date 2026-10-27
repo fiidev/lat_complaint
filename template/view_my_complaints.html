@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Complaints - School Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <a href="view_my_complaints.html">My Complaints</a>
+    <a href="add_complaint.html">+ Submit New</a>
+    <a href="login.html">Logout</a>
+  </div>
+
+  <div class="l-wrap">
+    <div class="l-main-article">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="margin: 0;">My Reported Complaints</h2>
+        <a href="add_complaint.html" class="button" style="margin: 0;">+ New Complaint</a>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Ticket #</th>
+            <th>Title</th>
+            <th>Room</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Reported Date</th>
+            <th>Notes / Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#1</td>
+            <td><strong>AC Mati dan Bau Gosong</strong></td>
+            <td>Lab Komputer 1 (Gedung A)</td>
+            <td>Kerusakan Fasilitas AC</td>
+            <td><span class="badge badge-warning">Submitted</span></td>
+            <td>2026-10-27</td>
+            <td><small style="color: #666;">Waiting for Admin Review</small></td>
+          </tr>
+          <tr>
+            <td>#2</td>
+            <td><strong>Lampu Ruangan Berkedip</strong></td>
+            <td>Ruang Teori RPL (Gedung B)</td>
+            <td>Kelistrikan</td>
+            <td><span class="badge badge-success">Accepted</span></td>
+            <td>2026-10-26</td>
+            <td><small style="color: #007bff; font-weight: bold;">Teknisi Ditugaskan</small></td>
+          </tr>
+          <tr>
+            <td>#3</td>
+            <td><strong>Beli Spidol Baru</strong></td>
+            <td>Ruang 103</td>
+            <td>Lainnya</td>
+            <td><span class="badge badge-danger">Rejected</span></td>
+            <td>2026-10-25</td>
+            <td><small style="color: #c00;">Ditolak: Hubungi Tata Usaha</small></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
