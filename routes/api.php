@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/complaint-categories', ComplaintCategoryController::class);
 
         Route::post('/complaints', [ComplaintController::class, 'store']);
-        Route::get('/me/complaints', [ComplaintController::class, 'myComplaints']);
+        Route::get('/me/complaints', [ComplaintController::class, 'my']);
         Route::get('/complaints/{id}', [ComplaintController::class, 'show']);
 
         Route::get('/tickets/{id}', [TicketController::class, 'show']);

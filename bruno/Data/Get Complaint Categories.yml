@@ -1,0 +1,18 @@
+info:
+  name: Get Complaint Categories
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{base_url}}/complaint-categories"
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

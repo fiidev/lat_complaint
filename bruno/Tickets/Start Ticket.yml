@@ -1,0 +1,24 @@
+info:
+  name: Staff - Start Ticket
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{base_url}}/tickets/{{ticket_id}}/start"
+  body:
+    type: json
+    data: |-
+      {
+        "note": "Initial inspection started."
+      }
+  auth:
+    type: bearer
+    token: "{{staff_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

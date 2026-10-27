@@ -37,7 +37,7 @@ class ComplaintController extends Controller
         ], 201);
     }
 
-    public function myComplaints(Request $request)
+    public function my(Request $request)
     {
         $complaints = Complaint::with(['room', 'category', 'ticket'])
             ->where('user_id', $request->user()->id)

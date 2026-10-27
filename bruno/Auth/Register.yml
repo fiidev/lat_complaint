@@ -1,0 +1,23 @@
+info:
+  name: Register User
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{base_url}}/auth/register"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Budi Santoso",
+        "email": "budi@student.com",
+        "password": "password123"
+      }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

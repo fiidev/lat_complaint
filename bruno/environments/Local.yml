@@ -1,0 +1,20 @@
+name: Local
+variables:
+  - name: base_url
+    value: http://127.0.0.1:8000/api/v1
+  - name: token
+    value: 17|i7RsLDTwLsJLVa0cBTu7LKyPEF6tTeVxTN7AIkauc06b0c6f
+  - name: admin_token
+    value: 17|i7RsLDTwLsJLVa0cBTu7LKyPEF6tTeVxTN7AIkauc06b0c6f
+  - name: staff_token
+    value: 16|Hn8xXrMp2wPI0nvKJmL01hXkO7Qor44hbbWPk6Olef51a0d3
+  - name: student_token
+    value: 15|k7AfQSg9sQEgsru13ZupoaFO6E3Rd3eUu2yLW2wGe53a00a7
+  - name: complaint_id
+    value:
+      type: number
+      data: "5"
+  - name: ticket_id
+    value:
+      type: number
+      data: "1"

@@ -1,0 +1,24 @@
+info:
+  name: Admin - Reject Complaint
+  type: http
+  seq: 3
+
+http:
+  method: PATCH
+  url: "{{base_url}}/admin/complaints/{{complaint_id}}/reject"
+  body:
+    type: json
+    data: |-
+      {
+        "rejection_reason": "Deskripsi masalah tidak jelas atau bukti fisik tidak ditemukan."
+      }
+  auth:
+    type: bearer
+    token: "{{admin_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

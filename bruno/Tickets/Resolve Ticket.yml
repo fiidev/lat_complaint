@@ -1,0 +1,24 @@
+info:
+  name: Staff - Resolve Ticket
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{base_url}}/tickets/{{ticket_id}}/resolve"
+  body:
+    type: json
+    data: |-
+      {
+        "resolution_notes": "Stop kontak baru telah dipasang dan diuji dengan multimeter. Berfungsi normal."
+      }
+  auth:
+    type: bearer
+    token: "{{staff_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

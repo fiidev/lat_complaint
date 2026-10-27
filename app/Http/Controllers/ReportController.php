@@ -6,19 +6,27 @@ use App\Models\Complaint;
 use App\Models\ComplaintCategory;
 use App\Models\Room;
 use App\Models\Ticket;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function summary(Request $request)
+    private function getDateRange(Request $request)
     {
         $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        $start = $request->start_date.' 00:00:00';
-        $end = $request->end_date.' 23:59:59';
+        return [
+            Carbon::parse($request->start_date)->startOfDay(),
+            Carbon::parse($request->end_date)->endOfDay(),
+        ];
+    }
+
+    public function summary(Request $request)
+    {
+        [$start, $end] = $this->getDateRange($request);
 
         $complaints = Complaint::with('ticket')
             ->whereBetween('created_at', [$start, $end])
@@ -48,71 +56,43 @@ class ReportController extends Controller
 
     public function byCategory(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
-        ]);
+        [$start, $end] = $this->getDateRange($request);
 
-        $start = $request->start_date.' 00:00:00';
-        $end = $request->end_date.' 23:59:59';
-
-        $categories = ComplaintCategory::withCount(['complaints' => function ($q) use ($start, $end) {
-            $q->whereBetween('created_at', [$start, $end]);
-        }])->get();
+        $categories = ComplaintCategory::select(['id', 'name', 'description'])
+            ->withCount(['complaints' => fn($q) => $q->whereBetween('created_at', [$start, $end])])->get();
 
         return response()->json([
             'message' => 'Complaint report by category generated successfully.',
-            'data' => $categories->map(fn ($c) => [
-                'id' => $c->id,
-                'name' => $c->name,
-                'total_complaints' => $c->complaints_count,
-            ]),
+            'data' => $categories,
         ]);
     }
 
     public function byRoom(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
-        ]);
+        [$start, $end] = $this->getDateRange($request);
 
-        $start = $request->start_date.' 00:00:00';
-        $end = $request->end_date.' 23:59:59';
-
-        $rooms = Room::withCount(['complaints' => function ($q) use ($start, $end) {
-            $q->whereBetween('created_at', [$start, $end]);
-        }])->get();
+        $rooms = Room::select(['id', 'name', 'building', 'room_number', 'is_active', 'complaints_count'])
+            ->withCount(['complaints' => fn($q) => $q->whereBetween('created_at', [$start, $end])])->get();
 
         return response()->json([
             'message' => 'Complaint report by room generated successfully.',
-            'data' => $rooms->map(fn ($r) => [
-                'id' => $r->id,
-                'building' => $r->building,
-                'room_number' => $r->room_number,
-                'name' => $r->name,
-                'total_complaints' => $r->complaints_count,
-            ]),
+            'data' => $rooms
         ]);
     }
 
     public function trends(Request $request)
     {
         $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
             'group_by' => 'nullable|in:day,month',
         ]);
 
-        $start = $request->start_date.' 00:00:00';
-        $end = $request->end_date.' 23:59:59';
+        [$start, $end] = $this->getDateRange($request);
         $format = ($request->group_by === 'month') ? 'Y-m' : 'Y-m-d';
 
         $complaints = Complaint::whereBetween('created_at', [$start, $end])
             ->get(['id', 'created_at']);
 
-        $trends = $complaints->groupBy(fn ($item) => $item->created_at->format($format))
-            ->map(fn ($group) => $group->count());
+        $trends = $complaints->countBy(fn($item) => $item->created_at->format($format));
 
         return response()->json([
             'message' => 'Complaint trends report generated successfully.',
@@ -125,23 +105,15 @@ class ReportController extends Controller
 
     public function resolution(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
-        ]);
+        [$start, $end] = $this->getDateRange($request);
 
-        $start = $request->start_date.' 00:00:00';
-        $end = $request->end_date.' 23:59:59';
+        $tickets = Ticket::whereHas('complaint', fn($q) => $q->whereBetween('created_at', [$start, $end]))->get();
 
-        $tickets = Ticket::whereHas('complaint', function ($q) use ($start, $end) {
-            $q->whereBetween('created_at', [$start, $end]);
-        })->get();
+        $resolved = $tickets->where('status', 'resolved')->filter(fn($t) => $t->resolved_at !== null);
 
-        $resolved = $tickets->where('status', 'resolved')->filter(fn ($t) => $t->resolved_at);
-
-        $avgMinutes = $resolved->count() > 0
-            ? round($resolved->avg(fn ($t) => $t->created_at->diffInMinutes($t->resolved_at)), 1)
-            : 0;
+        $avgMinutes = $resolved->isEmpty()
+            ? 0
+            : round($resolved->avg(fn($t) => $t->created_at->diffInMinutes($t->resolved_at)), 1);
 
         return response()->json([
             'message' => 'Ticket resolution report generated successfully.',
