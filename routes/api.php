@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/tickets/{id}/histories', [TicketController::class, 'getHistories']);
 
         Route::middleware('role:admin')->group(function () {
+            Route::get('/admin/users', [AuthController::class,'users']);
             Route::apiResource('rooms', RoomController::class)->except(['index', 'show']);
             Route::apiResource('complaint-categories', ComplaintCategoryController::class)->except(['index', 'show']);
             Route::get('/admin/complaints', [ComplaintController::class, 'adminIndex']);

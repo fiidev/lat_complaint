@@ -3,9 +3,9 @@ variables:
   - name: base_url
     value: http://127.0.0.1:8000/api/v1
   - name: token
-    value: 17|i7RsLDTwLsJLVa0cBTu7LKyPEF6tTeVxTN7AIkauc06b0c6f
+    value: 18|bBoKt8IjYCJDeakZI4OJTJiQYUvTdYqScA7FQ4nd3d2464c4
   - name: admin_token
-    value: 17|i7RsLDTwLsJLVa0cBTu7LKyPEF6tTeVxTN7AIkauc06b0c6f
+    value: 18|bBoKt8IjYCJDeakZI4OJTJiQYUvTdYqScA7FQ4nd3d2464c4
   - name: staff_token
     value: 16|Hn8xXrMp2wPI0nvKJmL01hXkO7Qor44hbbWPk6Olef51a0d3
   - name: student_token
@@ -13,8 +13,8 @@ variables:
   - name: complaint_id
     value:
       type: number
-      data: "5"
+      data: "4"
   - name: ticket_id
     value:
       type: number
-      data: "1"
+      data: "2"
