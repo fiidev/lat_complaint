@@ -15,8 +15,10 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-        Route::get('/rooms', RoomController::class);
-        Route::get('/complaint-categories', ComplaintCategoryController::class);
+        Route::get('/rooms', [RoomController::class, 'index']);
+        Route::get('/rooms/{id}', [RoomController::class, 'show']);
+        Route::get('/complaint-categories', [ComplaintCategoryController::class, 'index']);
+        Route::get('/complaint-categories/{id}', [ComplaintCategoryController::class, 'show']);
 
         Route::post('/complaints', [ComplaintController::class, 'store']);
         Route::get('/me/complaints', [ComplaintController::class, 'my']);
@@ -26,6 +28,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/tickets/{id}/histories', [TicketController::class, 'getHistories']);
 
         Route::middleware('role:admin')->group(function () {
+            Route::apiResource('rooms', RoomController::class)->except(['index', 'show']);
+            Route::apiResource('complaint-categories', ComplaintCategoryController::class)->except(['index', 'show']);
             Route::get('/admin/complaints', [ComplaintController::class, 'adminIndex']);
             Route::patch('/admin/complaints/{id}/accept', [ComplaintController::class, 'accept']);
             Route::patch('/admin/complaints/{id}/reject', [ComplaintController::class, 'reject']);
