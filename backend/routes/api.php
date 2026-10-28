@@ -17,7 +17,6 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-        // Master Data (Read-only untuk semua role)
         Route::apiResource('rooms', RoomController::class)->only(['index', 'show']);
         Route::apiResource('complaint-categories', ComplaintCategoryController::class)
             ->parameters(['complaint-categories' => 'category'])
