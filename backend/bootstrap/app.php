@@ -52,20 +52,10 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (ValidationException $e, Request $request) {
-            $formattedErrors = [];
-            foreach ($e->errors() as $field => $messages) {
-                foreach ($messages as $msg) {
-                    $formattedErrors[] = [
-                        'field' => $field,
-                        'message' => $msg,
-                    ];
-                }
-            }
-
             return response()->json([
                 'success' => false,
                 'message' => 'The given data was invalid.',
-                'errors' => $formattedErrors,
+                'errors' => $e->getMessage(),
             ], 422);
         });
 
