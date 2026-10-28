@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Template Navbar Semua Role</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" style="margin-top: 1.5rem;">
+    <h3 style="margin-bottom: 1rem;">1. Navbar Kondisi Guest (Belum Login)</h3>
+  </div>
+  <nav class="top-bar">
+    <h2>Complaint App</h2>
+    <div class="nav-links">
+      <a href="auth_login.html">Login</a>
+      <a href="auth_register.html">Register</a>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 2.5rem;">
+    <h3 style="margin-bottom: 1rem;">2. Navbar Kondisi Siswa / User (Pelapor)</h3>
+  </div>
+  <nav class="top-bar">
+    <h2>Sistem Pengaduan Sarpras</h2>
+    <div class="nav-links">
+      <a href="user_complaint_list.html">Aduan Saya</a>
+      <a href="user_complaint_create.html">Buat Aduan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 2.5rem;">
+    <h3 style="margin-bottom: 1rem;">3. Navbar Kondisi Admin</h3>
+  </div>
+  <nav class="top-bar">
+    <h2>Admin Sarpras</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html">Pengaduan</a>
+      <a href="admin_room_list.html">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 2.5rem;">
+    <h3 style="margin-bottom: 1rem;">4. Navbar Kondisi Staf / Teknisi</h3>
+  </div>
+  <nav class="top-bar">
+    <h2>Portal Teknisi</h2>
+    <div class="nav-links">
+      <a href="staff_ticket_list.html">Tiket Tugas Saya</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+</body>
+</html>

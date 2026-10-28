@@ -21,9 +21,8 @@ class ComplaintCategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'building' => 'required|string|max:255',
-            'room_number' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:complaint_categories,name',
+            'description' => 'nullable|string',
             'is_active' => 'boolean',
         ]);
 
@@ -38,7 +37,7 @@ class ComplaintCategoryController extends Controller
     public function show(ComplaintCategory $category)
     {
         return response()->json([
-            'message' => 'Room retrieved successfully.',
+            'message' => 'Complaint category retrieved successfully.',
             'data' => $category,
         ]);
     }
@@ -46,15 +45,15 @@ class ComplaintCategoryController extends Controller
     public function update(Request $request, ComplaintCategory $category)
     {
         $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'dscription' => 'sometimes|required|string|max:255',
-            'is_active' => 'boolean',
+            'name' => 'sometimes|required|string|max:255|unique:complaint_categories,name,' . $category->id,
+            'description' => 'sometimes|nullable|string',
+            'is_active' => 'sometimes|boolean',
         ]);
 
         $category->update($validated);
 
         return response()->json([
-            'message' => 'Complaint Catgeory updated successfully.',
+            'message' => 'Complaint category updated successfully.',
             'data' => $category,
         ]);
     }
@@ -64,7 +63,7 @@ class ComplaintCategoryController extends Controller
         $category->delete();
 
         return response()->json([
-            'message' => 'Complaint Catgeory deleted successfully.',
+            'message' => 'Complaint category deleted successfully.',
         ]);
     }
 }

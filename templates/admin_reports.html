@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Analitik - Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Admin Panel</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html">Pengaduan</a>
+      <a href="admin_room_list.html">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html" style="font-weight: 600;">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Filter Tanggal -->
+    <div class="card" style="padding: 1rem;">
+      <form style="display: flex; gap: 1rem; align-items: flex-end;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="start_date">Dari Tanggal</label>
+          <input type="date" id="start_date" name="start_date" class="form-control">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="end_date">Sampai Tanggal</label>
+          <input type="date" id="end_date" name="end_date" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Filter Data</button>
+      </form>
+    </div>
+
+    <!-- Ringkasan Angka (Summary) -->
+    <div class="grid-3">
+      <div class="stat-card">
+        <h3>Total Pengaduan</h3>
+        <div class="stat-value">24</div>
+      </div>
+      <div class="stat-card" style="border-left-color: #f59e0b;">
+        <h3>Sedang Diproses</h3>
+        <div class="stat-value">7</div>
+      </div>
+      <div class="stat-card" style="border-left-color: #10b981;">
+        <h3>Selesai (Resolved)</h3>
+        <div class="stat-value">17</div>
+      </div>
+    </div>
+
+    <!-- Laporan per Kategori -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Pengaduan Berdasarkan Kategori</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Jumlah Kasus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Perangkat Keras (Hardware)</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>Kelistrikan</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Fasilitas Fisik</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Laporan per Ruangan -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Pengaduan Berdasarkan Ruangan</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nama Ruangan</th>
+              <th>Jumlah Kasus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lab Komputer 1</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>Ruang Guru</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>Kelas X RPL 1</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

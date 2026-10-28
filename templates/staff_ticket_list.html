@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Tiket Tugas - Teknisi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Portal Teknisi Sarpras</h2>
+    <div class="nav-links">
+      <a href="staff_ticket_list.html" style="font-weight: 600;">Tiket Tugas Saya</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Tugas Perbaikan Ditugaskan</h3>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No Tiket</th>
+              <th>Ruangan</th>
+              <th>Kategori</th>
+              <th>Status Tiket</th>
+              <th>Tanggal Penugasan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#T-001</td>
+              <td>Lab Komputer 1</td>
+              <td>Perangkat Keras</td>
+              <td><span class="badge badge-warning">pending</span></td>
+              <td>2026-10-28</td>
+              <td>
+                <a href="staff_ticket_detail.html" class="btn btn-sm btn-primary">Lihat & Kerjakan</a>
+              </td>
+            </tr>
+            <tr>
+              <td>#T-002</td>
+              <td>Ruang Guru</td>
+              <td>Kelistrikan</td>
+              <td><span class="badge badge-info">in_progress</span></td>
+              <td>2026-10-27</td>
+              <td>
+                <a href="staff_ticket_detail.html" class="btn btn-sm btn-primary">Lihat & Kerjakan</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

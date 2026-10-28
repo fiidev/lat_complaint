@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Tiket - Teknisi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Portal Teknisi Sarpras</h2>
+    <div class="nav-links">
+      <a href="staff_ticket_list.html">Tiket Tugas Saya</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Detail Tiket #T-001</h3>
+        <a href="staff_ticket_list.html" class="btn btn-secondary btn-sm">Kembali ke Daftar</a>
+      </div>
+
+      <!-- Info Aduan -->
+      <div style="margin-bottom: 1.5rem;">
+        <p><strong>Ruangan:</strong> Lab Komputer 1</p>
+        <p><strong>Kategori:</strong> Perangkat Keras (Hardware)</p>
+        <p><strong>Status Tiket:</strong> <span class="badge badge-info">in_progress</span></p>
+        <p style="margin-top: 0.5rem;"><strong>Deskripsi Kerusakan:</strong></p>
+        <div style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; margin-top: 0.25rem;">
+          Monitor PC nomor 04 tidak mau menyala saat tombol power ditekan.
+        </div>
+      </div>
+
+      <!-- Tombol Aksi Status Pengerjaan -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem;">
+        <button class="btn btn-primary">Mulai Kerjakan</button>
+        <button class="btn btn-success">Selesaikan Tiket (Resolve)</button>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+
+      <!-- Riwayat / Histori Pengerjaan -->
+      <h4 style="margin-bottom: 0.75rem; color: #1e293b;">Riwayat Progres Pengerjaan</h4>
+      <div class="table-responsive" style="margin-bottom: 1.5rem;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Waktu</th>
+              <th>Status</th>
+              <th>Catatan Teknisi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-10-28 09:30</td>
+              <td><span class="badge badge-info">in_progress</span></td>
+              <td>Mulai pengecekan kabel power dan adaptor monitor.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Form Tambah Catatan Histori -->
+      <form>
+        <div class="form-group">
+          <label for="notes">Tambah Catatan Perkembangan</label>
+          <textarea id="notes" name="notes" class="form-control" placeholder="Tulis tindakan yang baru saja dilakukan..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary btn-sm">Kirim Catatan</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

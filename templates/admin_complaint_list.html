@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kelola Pengaduan - Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Admin Panel</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html" style="font-weight: 600;">Pengaduan</a>
+      <a href="admin_room_list.html">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Daftar Pengaduan Masuk</h3>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Pelapor</th>
+              <th>Ruangan</th>
+              <th>Kategori</th>
+              <th>Deskripsi</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#101</td>
+              <td>Ahmad Siswa</td>
+              <td>Lab Komputer 1</td>
+              <td>Hardware</td>
+              <td>Monitor PC nomor 04 tidak mau menyala.</td>
+              <td><span class="badge badge-warning">pending</span></td>
+              <td>
+                <div style="display: flex; gap: 0.35rem;">
+                  <a href="user_complaint_detail.html" class="btn btn-sm btn-secondary">Detail</a>
+                  <button class="btn btn-sm btn-success">Terima</button>
+                  <button class="btn btn-sm btn-danger">Tolak</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>#102</td>
+              <td>Budi Guru</td>
+              <td>Ruang Guru</td>
+              <td>Kelistrikan</td>
+              <td>AC bocor dan menetes ke meja.</td>
+              <td><span class="badge badge-info">accepted</span></td>
+              <td>
+                <div style="display: flex; gap: 0.35rem;">
+                  <a href="user_complaint_detail.html" class="btn btn-sm btn-secondary">Detail</a>
+                  <a href="admin_ticket_create.html" class="btn btn-sm btn-primary">Tugaskan Tiket</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

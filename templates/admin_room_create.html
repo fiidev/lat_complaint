@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tambah Ruangan - Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Admin Panel</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html">Pengaduan</a>
+      <a href="admin_room_list.html" style="font-weight: 600;">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container-sm">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Tambah Ruangan Baru</h3>
+        <a href="admin_room_list.html" class="btn btn-secondary btn-sm">Kembali</a>
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label for="name">Nama Ruangan</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Contoh: Lab Komputer 2" required>
+        </div>
+
+        <div class="form-group">
+          <label for="location">Lokasi / Keterangan</label>
+          <input type="text" id="location" name="location" class="form-control" placeholder="Contoh: Gedung B Lantai 2" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">Simpan Ruangan</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

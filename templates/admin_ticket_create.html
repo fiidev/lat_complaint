@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tugaskan Tiket ke Staf - Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Admin Panel</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html">Pengaduan</a>
+      <a href="admin_room_list.html">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container-sm">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Penugasan Tiket Perbaikan</h3>
+        <a href="admin_complaint_list.html" class="btn btn-secondary btn-sm">Batal</a>
+      </div>
+
+      <div style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 1.25rem;">
+        <p><strong>Aduan #102:</strong> AC bocor dan menetes ke meja.</p>
+        <p><strong>Ruangan:</strong> Ruang Guru</p>
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label for="staff_id">Pilih Teknisi / Staf</label>
+          <select id="staff_id" name="staff_id" class="form-control" required>
+            <option value="">-- Pilih Staf Teknisi --</option>
+            <option value="4">Pak Joko (Teknisi Listrik)</option>
+            <option value="5">Pak Andi (Teknisi AC)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">Buat & Tugaskan Tiket</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

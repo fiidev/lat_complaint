@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Aduan Saya - User</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Sistem Pengaduan Sarpras</h2>
+    <div class="nav-links">
+      <a href="user_complaint_list.html" style="font-weight: 600;">Aduan Saya</a>
+      <a href="user_complaint_create.html">Buat Aduan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Riwayat Pengaduan Saya</h3>
+        <a href="user_complaint_create.html" class="btn btn-primary btn-sm">+ Buat Aduan Baru</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Ruangan</th>
+              <th>Kategori</th>
+              <th>Deskripsi</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Lab Komputer 1</td>
+              <td>Perangkat Keras</td>
+              <td>Monitor PC nomor 04 tidak mau menyala.</td>
+              <td>2026-10-28</td>
+              <td><span class="badge badge-warning">pending</span></td>
+              <td><a href="user_complaint_detail.html" class="btn btn-sm btn-secondary">Detail</a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Ruang Guru</td>
+              <td>Kelistrikan</td>
+              <td>AC bocor dan menetes ke meja.</td>
+              <td>2026-10-27</td>
+              <td><span class="badge badge-info">in_progress</span></td>
+              <td><a href="user_complaint_detail.html" class="btn btn-sm btn-secondary">Detail</a></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Kelas X RPL 1</td>
+              <td>Fasilitas Fisik</td>
+              <td>Gagang pintu patah.</td>
+              <td>2026-10-25</td>
+              <td><span class="badge badge-success">resolved</span></td>
+              <td><a href="user_complaint_detail.html" class="btn btn-sm btn-secondary">Detail</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const client = axios.create({
-  baseURL: 'http://127.0.0.1:8001/api/v1',
+  baseURL: 'http://127.0.0.1:8000/api/v1',
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
-});
+})
 
 client.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`
   }
-  return config;
-});
+  return config
+})

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Ruangan - Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-bar">
+    <h2>Admin Panel</h2>
+    <div class="nav-links">
+      <a href="admin_complaint_list.html">Pengaduan</a>
+      <a href="admin_room_list.html" style="font-weight: 600;">Ruangan</a>
+      <a href="admin_category_list.html">Kategori</a>
+      <a href="admin_reports.html">Laporan</a>
+      <button class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Data Master Ruangan</h3>
+        <a href="admin_room_create.html" class="btn btn-primary btn-sm">+ Tambah Ruangan</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama Ruangan</th>
+              <th>Lokasi / Gedung</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Lab Komputer 1</td>
+              <td>Gedung B Lt. 2</td>
+              <td>
+                <div style="display: flex; gap: 0.35rem;">
+                  <a href="admin_room_edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-danger">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Ruang Guru</td>
+              <td>Gedung A Lt. 1</td>
+              <td>
+                <div style="display: flex; gap: 0.35rem;">
+                  <a href="admin_room_edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-danger">Hapus</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
