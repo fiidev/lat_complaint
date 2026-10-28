@@ -27,7 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
-        $exceptions->render(function (AuthenticationException $e, Request $request) {
+        $exceptions->render(function (AuthenticationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthenticated.',
@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 401);
         });
 
-        $exceptions->render(function (AuthorizationException $e, Request $request) {
+        $exceptions->render(function (AuthorizationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden.',
@@ -43,7 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 403);
         });
 
-        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
+        $exceptions->render(function (AccessDeniedHttpException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden.',
@@ -51,7 +51,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 403);
         });
 
-        $exceptions->render(function (ValidationException $e, Request $request) {
+        $exceptions->render(function (ValidationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'The given data was invalid.',
@@ -59,7 +59,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 422);
         });
 
-        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+        $exceptions->render(function (NotFoundHttpException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Resource not found.',
