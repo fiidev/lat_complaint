@@ -1,59 +1,65 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function AdminComplaints() {
-  const [complaints, setComplaints] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [complaints, setComplaints] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const get = async () => {
     try {
-      const res = await client.get('/admin/complaints')
-      setComplaints(res.data.data)
+      const res = await client.get("/admin/complaints");
+      setComplaints(res.data.data);
     } catch {
-      setError('Gagal memuat pengaduan')
+      setError("Gagal memuat pengaduan");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    get()
-  }, [])
+    get();
+  }, []);
 
   const accept = async (id) => {
-    if (!confirm('Terima aduan ini?')) return
+    if (!confirm("Terima aduan ini?")) return;
     try {
-      await client.patch(`/admin/complaints/${id}/accept`)
+      await client.patch(`/admin/complaints/${id}/accept`);
       setComplaints((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: 'accepted' } : c))
-      )
+        prev.map((c) => (c.id === id ? { ...c, status: "accepted" } : c)),
+      );
     } catch (err) {
-      alert(err.response?.data?.message || 'Gagal menerima aduan')
+      alert(err.response?.data?.message || "Gagal menerima aduan");
     }
-  }
+  };
 
   const reject = async (id) => {
-    const reason = prompt('Alasan penolakan:')
-    if (!reason) return
+    const reason = prompt("Alasan penolakan:");
+    if (!reason) return;
     try {
-      await client.patch(`/admin/complaints/${id}/reject`, { rejection_reason: reason })
+      await client.patch(`/admin/complaints/${id}/reject`, {
+        rejection_reason: reason,
+      });
       setComplaints((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: 'rejected', rejection_reason: reason } : c))
-      )
+        prev.map((c) =>
+          c.id === id
+            ? { ...c, status: "rejected", rejection_reason: reason }
+            : c,
+        ),
+      );
     } catch (err) {
-      alert(err.response?.data?.message || 'Gagal menolak aduan')
+      alert(err.response?.data?.message || "Gagal menolak aduan");
     }
-  }
+  };
 
   const badgeColor = {
-    submitted: 'badge-warning',
-    accepted: 'badge-info',
-    rejected: 'badge-danger',
-    in_progress: 'badge-info',
-    resolved: 'badge-success',
-  }
+    submitted: "badge-warning",
+    accepted: "badge-info",
+    rejected: "badge-danger",
+    in_progress: "badge-info",
+    resolved: "badge-success",
+  };
 
   return (
     <div className="card">
@@ -82,46 +88,71 @@ export default function AdminComplaints() {
                 <tr key={c.id}>
                   <td>#{c.id}</td>
                   <td>
-                    <strong>{c.user?.name || '-'}</strong>
+                    <strong>{c.user?.name || "-"}</strong>
                     <br />
-                    <small style={{ color: '#64748b' }}>{c.user?.role}</small>
+                    <small style={{ color: "#64748b" }}>{c.user?.role}</small>
                   </td>
-                  <td>{c.room?.name || '-'}</td>
+                  <td>{c.room?.name || "-"}</td>
                   <td>
                     <strong>{c.title}</strong>
                     <br />
-                    <small style={{ color: '#64748b' }}>{c.category?.name || '-'}</small>
+                    <small style={{ color: "#64748b" }}>
+                      {c.category?.name || "-"}
+                    </small>
                   </td>
                   <td>
-                    <span className={`badge ${badgeColor[c.status] || 'badge-secondary'}`}>
+                    <span
+                      className={`badge ${badgeColor[c.status] || "badge-secondary"}`}
+                    >
                       {c.status}
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
-                      <Link to={`/complaints/${c.id}`} className="btn btn-sm btn-secondary">
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "0.35rem",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Link
+                        to={`/complaints/${c.id}`}
+                        className="btn btn-sm btn-secondary"
+                      >
                         Detail
                       </Link>
 
-                      {c.status === 'submitted' && (
+                      {c.status === "submitted" && (
                         <>
-                          <button onClick={() => accept(c.id)} className="btn btn-sm btn-success">
+                          <button
+                            onClick={() => accept(c.id)}
+                            className="btn btn-sm btn-success"
+                          >
                             Terima
                           </button>
-                          <button onClick={() => reject(c.id)} className="btn btn-sm btn-danger">
+                          <button
+                            onClick={() => reject(c.id)}
+                            className="btn btn-sm btn-danger"
+                          >
                             Tolak
                           </button>
                         </>
                       )}
 
-                      {c.status === 'accepted' && !c.ticket && (
-                        <Link to={`/complaints/${c.id}/create-ticket`} className="btn btn-sm btn-primary">
+                      {c.status === "accepted" && !c.ticket && (
+                        <Link
+                          to={`/complaints/${c.id}/create-ticket`}
+                          className="btn btn-sm btn-primary"
+                        >
                           Tugaskan Tiket
                         </Link>
                       )}
 
                       {c.ticket && (
-                        <Link to={`/tickets/${c.ticket.id}`} className="btn btn-sm btn-info">
+                        <Link
+                          to={`/tickets/${c.ticket.id}`}
+                          className="btn btn-sm btn-info"
+                        >
                           Lihat Tiket
                         </Link>
                       )}
@@ -134,5 +165,5 @@ export default function AdminComplaints() {
         </div>
       )}
     </div>
-  )
+  );
 }

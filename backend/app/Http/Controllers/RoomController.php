@@ -9,7 +9,7 @@ class RoomController extends Controller
 {
     public function index(Request $request)
     {
-        $rooms = Room::when($request->has('active'), fn($q) => $q->where('is_active', true))
+        $rooms = Room::when($request->has('active'), fn ($q) => $q->where('is_active', true))
             ->get();
 
         return response()->json([

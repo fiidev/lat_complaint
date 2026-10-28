@@ -63,16 +63,17 @@ class AuthController extends Controller
             'message' => 'Logged out successfully.',
         ]);
     }
+
     public function users(Request $req)
     {
         $q = User::select('id', 'name', 'email', 'role');
         if ($req->has('role')) {
             $q->where('role', $req->role);
         }
-    
+
         return response()->json([
             'message' => 'Get Users Successfully',
-            'data' => $q->get()
+            'data' => $q->get(),
         ]);
     }
 }

@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function Register() {
-  const navigate = useNavigate()
-  const [form, setForm] = useState({ name: '', email: '', password: '' })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await client.post('/auth/register', form)
-      navigate('/login')
+      await client.post("/auth/register", form);
+      navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal daftar')
+      setError(err.response?.data?.message || "Gagal daftar");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container-sm">
       <div className="card">
-        <h2 className="card-title" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+        <h2
+          className="card-title"
+          style={{ textAlign: "center", marginBottom: "1.5rem" }}
+        >
           Register
         </h2>
 
@@ -77,15 +80,30 @@ export default function Register() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Loading...' : 'Register'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Loading..." : "Register"}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-          Sudah punya akun? <Link to="/login" style={{ color: '#2563eb' }}>Login</Link>
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "1rem",
+            fontSize: "0.85rem",
+            color: "#64748b",
+          }}
+        >
+          Sudah punya akun?{" "}
+          <Link to="/login" style={{ color: "#2563eb" }}>
+            Login
+          </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }

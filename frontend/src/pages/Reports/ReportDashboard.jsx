@@ -1,52 +1,60 @@
-import { useEffect, useState } from 'react'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { client } from "../../lib/client";
 
 export default function ReportDashboard() {
   const [filter, setFilter] = useState({
-    start_date: '2026-01-01',
-    end_date: '2026-12-31',
-  })
-  const [summary, setSummary] = useState(null)
-  const [resolution, setResolution] = useState(null)
-  const [categories, setCategories] = useState([])
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+    start_date: "2026-01-01",
+    end_date: "2026-12-31",
+  });
+  const [summary, setSummary] = useState(null);
+  const [resolution, setResolution] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const get = async () => {
-    setLoading(true)
-    setError('')
+    setLoading(true);
+    setError("");
     try {
       const [resSummary, resCat, resRoom, resRes] = await Promise.all([
-        client.get('/admin/reports/complaints/summary', { params: filter }),
-        client.get('/admin/reports/complaints/by-category', { params: filter }),
-        client.get('/admin/reports/complaints/by-room', { params: filter }),
-        client.get('/admin/reports/tickets/resolution', { params: filter }),
-      ])
-      setSummary(resSummary.data.data)
-      setCategories(resCat.data.data || [])
-      setRooms(resRoom.data.data || [])
-      setResolution(resRes.data.data)
+        client.get("/admin/reports/complaints/summary", { params: filter }),
+        client.get("/admin/reports/complaints/by-category", { params: filter }),
+        client.get("/admin/reports/complaints/by-room", { params: filter }),
+        client.get("/admin/reports/tickets/resolution", { params: filter }),
+      ]);
+      setSummary(resSummary.data.data);
+      setCategories(resCat.data.data || []);
+      setRooms(resRoom.data.data || []);
+      setResolution(resRes.data.data);
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal memuat laporan')
+      setError(err.response?.data?.message || "Gagal memuat laporan");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    get()
-  }, [])
+    get();
+  }, []);
 
   const submit = (e) => {
-    e.preventDefault()
-    get()
-  }
+    e.preventDefault();
+    get();
+  };
 
   return (
     <div>
-      <div className="card" style={{ padding: '1rem', marginBottom: '1.5rem' }}>
-        <form onSubmit={submit} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      <div className="card" style={{ padding: "1rem", marginBottom: "1.5rem" }}>
+        <form
+          onSubmit={submit}
+          style={{
+            display: "flex",
+            gap: "1rem",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+          }}
+        >
           <div className="form-group" style={{ marginBottom: 0 }}>
             <label htmlFor="start_date">Dari Tanggal</label>
             <input
@@ -55,7 +63,9 @@ export default function ReportDashboard() {
               name="start_date"
               className="form-control"
               value={filter.start_date}
-              onChange={(e) => setFilter({ ...filter, start_date: e.target.value })}
+              onChange={(e) =>
+                setFilter({ ...filter, start_date: e.target.value })
+              }
               required
             />
           </div>
@@ -68,13 +78,15 @@ export default function ReportDashboard() {
               name="end_date"
               className="form-control"
               value={filter.end_date}
-              onChange={(e) => setFilter({ ...filter, end_date: e.target.value })}
+              onChange={(e) =>
+                setFilter({ ...filter, end_date: e.target.value })
+              }
               required
             />
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Memuat...' : 'Filter'}
+            {loading ? "Memuat..." : "Filter"}
           </button>
         </form>
       </div>
@@ -96,7 +108,9 @@ export default function ReportDashboard() {
         </div>
         <div className="stat-card">
           <h3>Rata-rata Waktu Solusi</h3>
-          <div className="stat-value">{resolution?.metrics?.avg_resolution_time_hours || 0} jam</div>
+          <div className="stat-value">
+            {resolution?.metrics?.avg_resolution_time_hours || 0} jam
+          </div>
         </div>
       </div>
 
@@ -117,7 +131,9 @@ export default function ReportDashboard() {
               {categories.map((c, i) => (
                 <tr key={c.id}>
                   <td>{i + 1}</td>
-                  <td><strong>{c.name}</strong></td>
+                  <td>
+                    <strong>{c.name}</strong>
+                  </td>
                   <td>{c.complaints_count || 0} aduan</td>
                 </tr>
               ))}
@@ -144,8 +160,12 @@ export default function ReportDashboard() {
               {rooms.map((r, i) => (
                 <tr key={r.id}>
                   <td>{i + 1}</td>
-                  <td><strong>{r.name}</strong></td>
-                  <td>{r.building} ({r.room_number})</td>
+                  <td>
+                    <strong>{r.name}</strong>
+                  </td>
+                  <td>
+                    {r.building} ({r.room_number})
+                  </td>
                   <td>{r.complaints_count || 0} aduan</td>
                 </tr>
               ))}
@@ -154,5 +174,5 @@ export default function ReportDashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }

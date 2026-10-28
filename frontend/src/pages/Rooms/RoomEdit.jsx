@@ -1,56 +1,57 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function RoomEdit() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: '',
-    building: '',
-    room_number: '',
+    name: "",
+    building: "",
+    room_number: "",
     is_active: true,
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [fetching, setFetching] = useState(true)
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     const get = async () => {
       try {
-        const res = await client.get(`/rooms/${id}`)
-        const item = res.data.data
-        if (item) setForm(item)
-      } catch {
-        setError('Gagal memuat data')
+        const res = await client.get(`/rooms/${id}`);
+        const item = res.data.data;
+        if (item) setForm(item);
+      } catch (err) {
+        setError(err.response?.data?.message || "Gagal memuat data");
       } finally {
-        setFetching(false)
+        setFetching(false);
       }
-    }
-    get()
-  }, [id])
+    };
+    get();
+  }, [id]);
 
   const change = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    setForm({ ...form, [e.target.name]: value })
-  }
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setForm({ ...form, [e.target.name]: value });
+  };
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await client.put(`/rooms/${id}`, form)
-      navigate('/rooms')
+      await client.put(`/rooms/${id}`, form);
+      navigate("/rooms");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal update data')
+      setError(err.response?.data?.message || "Gagal update data");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <p>Loading...</p>;
 
   return (
     <div className="container-sm">
@@ -104,7 +105,10 @@ export default function RoomEdit() {
             />
           </div>
 
-          <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div
+            className="form-group"
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+          >
             <input
               type="checkbox"
               id="is_active"
@@ -112,14 +116,21 @@ export default function RoomEdit() {
               checked={Boolean(form.is_active)}
               onChange={change}
             />
-            <label htmlFor="is_active" style={{ marginBottom: 0 }}>Ruangan Aktif</label>
+            <label htmlFor="is_active" style={{ marginBottom: 0 }}>
+              Ruangan Aktif
+            </label>
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Menyimpan...' : 'Update'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Menyimpan..." : "Update"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

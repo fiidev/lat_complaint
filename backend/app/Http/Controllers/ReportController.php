@@ -6,8 +6,8 @@ use App\Models\Complaint;
 use App\Models\ComplaintCategory;
 use App\Models\Room;
 use App\Models\Ticket;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ReportController extends Controller
 {
@@ -59,7 +59,7 @@ class ReportController extends Controller
         [$start, $end] = $this->getDateRange($request);
 
         $categories = ComplaintCategory::select(['id', 'name', 'description'])
-            ->withCount(['complaints' => fn($q) => $q->whereBetween('created_at', [$start, $end])])->get();
+            ->withCount(['complaints' => fn ($q) => $q->whereBetween('created_at', [$start, $end])])->get();
 
         return response()->json([
             'message' => 'Complaint report by category generated successfully.',
@@ -72,11 +72,11 @@ class ReportController extends Controller
         [$start, $end] = $this->getDateRange($request);
 
         $rooms = Room::select(['id', 'name', 'building', 'room_number', 'is_active', 'complaints_count'])
-            ->withCount(['complaints' => fn($q) => $q->whereBetween('created_at', [$start, $end])])->get();
+            ->withCount(['complaints' => fn ($q) => $q->whereBetween('created_at', [$start, $end])])->get();
 
         return response()->json([
             'message' => 'Complaint report by room generated successfully.',
-            'data' => $rooms
+            'data' => $rooms,
         ]);
     }
 
@@ -92,7 +92,7 @@ class ReportController extends Controller
         $complaints = Complaint::whereBetween('created_at', [$start, $end])
             ->get(['id', 'created_at']);
 
-        $trends = $complaints->countBy(fn($item) => $item->created_at->format($format));
+        $trends = $complaints->countBy(fn ($item) => $item->created_at->format($format));
 
         return response()->json([
             'message' => 'Complaint trends report generated successfully.',
@@ -107,13 +107,13 @@ class ReportController extends Controller
     {
         [$start, $end] = $this->getDateRange($request);
 
-        $tickets = Ticket::whereHas('complaint', fn($q) => $q->whereBetween('created_at', [$start, $end]))->get();
+        $tickets = Ticket::whereHas('complaint', fn ($q) => $q->whereBetween('created_at', [$start, $end]))->get();
 
-        $resolved = $tickets->where('status', 'resolved')->filter(fn($t) => $t->resolved_at !== null);
+        $resolved = $tickets->where('status', 'resolved')->filter(fn ($t) => $t->resolved_at !== null);
 
         $avgMinutes = $resolved->isEmpty()
             ? 0
-            : round($resolved->avg(fn($t) => $t->created_at->diffInMinutes($t->resolved_at)), 1);
+            : round($resolved->avg(fn ($t) => $t->created_at->diffInMinutes($t->resolved_at)), 1);
 
         return response()->json([
             'message' => 'Ticket resolution report generated successfully.',

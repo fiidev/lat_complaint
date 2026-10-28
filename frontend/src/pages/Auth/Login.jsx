@@ -1,42 +1,43 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [form, setForm] = useState({ email: '', password: '' })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      const res = await client.post('/auth/login', form)
-      const { token, user } = res.data.data
+      const res = await client.post("/auth/login", form);
+      const { token, user } = res.data.data;
 
-      localStorage.setItem('token', token)
-      localStorage.setItem('role', user.role)
-      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role);
+      localStorage.setItem("user", JSON.stringify(user));
 
-      if (user.role === 'admin') navigate('/admin/complaints')
-      else if (user.role === 'staff') navigate('/tickets')
-      else navigate('/complaints')
+      navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || 'Email atau password salah')
+      setError(err.response?.data?.message || "Email atau password salah");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container-sm">
       <div className="card">
-        <h2 className="card-title" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+        <h2
+          className="card-title"
+          style={{ textAlign: "center", marginBottom: "1.5rem" }}
+        >
           Login
         </h2>
 
@@ -50,7 +51,7 @@ export default function Login() {
               id="email"
               name="email"
               className="form-control"
-              placeholder="admin@admin.com"
+              placeholder="example@example.com"
               value={form.email}
               onChange={change}
               required
@@ -71,15 +72,30 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Loading...' : 'Login'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-          Belum punya akun? <Link to="/register" style={{ color: '#2563eb' }}>Register</Link>
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "1rem",
+            fontSize: "0.85rem",
+            color: "#64748b",
+          }}
+        >
+          Belum punya akun?{" "}
+          <Link to="/register" style={{ color: "#2563eb" }}>
+            Register
+          </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }

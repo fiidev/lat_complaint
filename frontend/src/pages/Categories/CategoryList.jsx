@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function CategoryList() {
-  const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const get = async () => {
     try {
-      const res = await client.get('/complaint-categories')
-      setCategories(res.data.data)
+      const res = await client.get("/complaint-categories");
+      setCategories(res.data.data);
     } catch {
-      setError('Gagal memuat kategori')
+      setError("Gagal memuat kategori");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    get()
-  }, [])
+    get();
+  }, []);
 
   const del = async (id) => {
-    if (!confirm('Hapus kategori ini?')) return
+    if (!confirm("Hapus kategori ini?")) return;
     try {
-      await client.delete(`/complaint-categories/${id}`)
-      setCategories((prev) => prev.filter((c) => c.id !== id))
+      await client.delete(`/complaint-categories/${id}`);
+      setCategories((prev) => prev.filter((c) => c.id !== id));
     } catch (err) {
-      alert(err.response?.data?.message || 'Gagal menghapus')
+      alert(err.response?.data?.message || "Gagal menghapus");
     }
-  }
+  };
 
   return (
     <div className="card">
@@ -58,13 +58,21 @@ export default function CategoryList() {
               {categories.map((c, i) => (
                 <tr key={c.id}>
                   <td>{i + 1}</td>
-                  <td><strong>{c.name}</strong></td>
                   <td>
-                    <div style={{ display: 'flex', gap: '0.35rem' }}>
-                      <Link to={`/categories/${c.id}/edit`} className="btn btn-sm btn-secondary">
+                    <strong>{c.name}</strong>
+                  </td>
+                  <td>
+                    <div style={{ display: "flex", gap: "0.35rem" }}>
+                      <Link
+                        to={`/categories/${c.id}/edit`}
+                        className="btn btn-sm btn-secondary"
+                      >
                         Edit
                       </Link>
-                      <button onClick={() => del(c.id)} className="btn btn-sm btn-danger">
+                      <button
+                        onClick={() => del(c.id)}
+                        className="btn btn-sm btn-danger"
+                      >
                         Hapus
                       </button>
                     </div>
@@ -76,5 +84,5 @@ export default function CategoryList() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -50,7 +50,7 @@ class ComplaintController extends Controller
         ]);
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, string $id)
     {
         $complaint = Complaint::with(['room', 'category', 'ticket'])->findOrFail($id);
         $user = $request->user();

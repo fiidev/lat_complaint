@@ -9,7 +9,7 @@ class ComplaintCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $category = ComplaintCategory::when($request->has('active'), fn($q) => $q->where('is_active', true))
+        $category = ComplaintCategory::when($request->has('active'), fn ($q) => $q->where('is_active', true))
             ->get();
 
         return response()->json([
@@ -45,7 +45,7 @@ class ComplaintCategoryController extends Controller
     public function update(Request $request, ComplaintCategory $category)
     {
         $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255|unique:complaint_categories,name,' . $category->id,
+            'name' => 'sometimes|required|string|max:255|unique:complaint_categories,name,'.$category->id,
             'description' => 'sometimes|nullable|string',
             'is_active' => 'sometimes|boolean',
         ]);

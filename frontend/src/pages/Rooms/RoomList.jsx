@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function RoomList() {
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const get = async () => {
     try {
-      const res = await client.get('/rooms')
-      setRooms(res.data.data)
+      const res = await client.get("/rooms");
+      setRooms(res.data.data);
     } catch {
-      setError('Gagal memuat data')
+      setError("Gagal memuat data");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    get()
-  }, [])
+    get();
+  }, []);
 
   const del = async (id) => {
-    if (!confirm('Hapus ruangan ini?')) return
+    if (!confirm("Hapus ruangan ini?")) return;
     try {
-      await client.delete(`/rooms/${id}`)
-      setRooms((prev) => prev.filter((r) => r.id !== id))
+      await client.delete(`/rooms/${id}`);
+      setRooms((prev) => prev.filter((r) => r.id !== id));
     } catch (err) {
-      alert(err.response?.data?.message || 'Gagal menghapus')
+      alert(err.response?.data?.message || "Gagal menghapus");
     }
-  }
+  };
 
   return (
     <div className="card">
@@ -61,20 +61,30 @@ export default function RoomList() {
               {rooms.map((r, i) => (
                 <tr key={r.id}>
                   <td>{i + 1}</td>
-                  <td><strong>{r.name}</strong></td>
+                  <td>
+                    <strong>{r.name}</strong>
+                  </td>
                   <td>{r.building}</td>
                   <td>{r.room_number}</td>
                   <td>
-                    <span className={`badge ${r.is_active ? 'badge-success' : 'badge-danger'}`}>
-                      {r.is_active ? 'Aktif' : 'Non-aktif'}
+                    <span
+                      className={`badge ${r.is_active ? "badge-success" : "badge-danger"}`}
+                    >
+                      {r.is_active ? "Aktif" : "Non-aktif"}
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: 'flex', gap: '0.35rem' }}>
-                      <Link to={`/rooms/${r.id}/edit`} className="btn btn-sm btn-secondary">
+                    <div style={{ display: "flex", gap: "0.35rem" }}>
+                      <Link
+                        to={`/rooms/${r.id}/edit`}
+                        className="btn btn-sm btn-secondary"
+                      >
                         Edit
                       </Link>
-                      <button onClick={() => del(r.id)} className="btn btn-sm btn-danger">
+                      <button
+                        onClick={() => del(r.id)}
+                        className="btn btn-sm btn-danger"
+                      >
                         Hapus
                       </button>
                     </div>
@@ -86,5 +96,5 @@ export default function RoomList() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,34 +1,34 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function ComplaintList() {
-  const [complaints, setComplaints] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [complaints, setComplaints] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const get = async () => {
     try {
-      const res = await client.get('/me/complaints')
-      setComplaints(res.data.data)
+      const res = await client.get("/me/complaints");
+      setComplaints(res.data.data);
     } catch {
-      setError('Gagal memuat aduan')
+      setError("Gagal memuat aduan");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    get()
-  }, [])
+    get();
+  }, []);
 
   const badgeColor = {
-    submitted: 'badge-warning',
-    accepted: 'badge-info',
-    rejected: 'badge-danger',
-    in_progress: 'badge-info',
-    resolved: 'badge-success',
-  }
+    submitted: "badge-warning",
+    accepted: "badge-info",
+    rejected: "badge-danger",
+    in_progress: "badge-info",
+    resolved: "badge-success",
+  };
 
   return (
     <div className="card">
@@ -62,17 +62,24 @@ export default function ComplaintList() {
               {complaints.map((c, i) => (
                 <tr key={c.id}>
                   <td>{i + 1}</td>
-                  <td><strong>{c.title}</strong></td>
-                  <td>{c.room?.name || '-'}</td>
-                  <td>{c.category?.name || '-'}</td>
-                  <td>{c.created_at ? c.created_at.split('T')[0] : '-'}</td>
                   <td>
-                    <span className={`badge ${badgeColor[c.status] || 'badge-secondary'}`}>
+                    <strong>{c.title}</strong>
+                  </td>
+                  <td>{c.room?.name || "-"}</td>
+                  <td>{c.category?.name || "-"}</td>
+                  <td>{c.created_at ? c.created_at.split("T")[0] : "-"}</td>
+                  <td>
+                    <span
+                      className={`badge ${badgeColor[c.status] || "badge-secondary"}`}
+                    >
                       {c.status}
                     </span>
                   </td>
                   <td>
-                    <Link to={`/complaints/${c.id}`} className="btn btn-sm btn-secondary">
+                    <Link
+                      to={`/complaints/${c.id}`}
+                      className="btn btn-sm btn-secondary"
+                    >
                       Detail
                     </Link>
                   </td>
@@ -83,5 +90,5 @@ export default function ComplaintList() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,29 +1,29 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function CategoryCreate() {
-  const navigate = useNavigate()
-  const [form, setForm] = useState({ name: '' })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ name: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await client.post('/complaint-categories', form)
-      navigate('/categories')
+      await client.post("/complaint-categories", form);
+      navigate("/categories");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal menyimpan kategori')
+      setError(err.response?.data?.message || "Gagal menyimpan kategori");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container-sm">
@@ -52,11 +52,16 @@ export default function CategoryCreate() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Menyimpan...' : 'Simpan'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Menyimpan..." : "Simpan"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

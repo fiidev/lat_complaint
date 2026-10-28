@@ -1,48 +1,48 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function CategoryEdit() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const [form, setForm] = useState({ name: '' })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [fetching, setFetching] = useState(true)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ name: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     const get = async () => {
       try {
-        const res = await client.get(`/complaint-categories/${id}`)
-        const item = res.data.data
-        if (item) setForm(item)
-      } catch {
-        setError('Gagal memuat kategori')
+        const res = await client.get(`/complaint-categories/${id}`);
+        const item = res.data.data;
+        if (item) setForm(item);
+      } catch (err) {
+        setError(err.response?.data?.message || "Gagal memuat kategori");
       } finally {
-        setFetching(false)
+        setFetching(false);
       }
-    }
-    get()
-  }, [id])
+    };
+    get();
+  }, [id]);
 
-  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await client.put(`/complaint-categories/${id}`, form)
-      navigate('/categories')
+      await client.put(`/complaint-categories/${id}`, form);
+      navigate("/categories");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal update kategori')
+      setError(err.response?.data?.message || "Gagal update kategori");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <p>Loading...</p>;
 
   return (
     <div className="container-sm">
@@ -70,11 +70,16 @@ export default function CategoryEdit() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Menyimpan...' : 'Update'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Menyimpan..." : "Update"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

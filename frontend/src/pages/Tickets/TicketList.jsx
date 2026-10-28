@@ -77,7 +77,7 @@ export default function TicketList() {
                     <span
                       className={`badge ${badgeStatus[t.status] || "badge-secondary"}`}
                     >
-                      {t.status}
+                      {t.status === "in_progress" ? "progress" : t.status}
                     </span>
                   </td>
                   <td>

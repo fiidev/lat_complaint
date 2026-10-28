@@ -1,37 +1,38 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function RoomCreate() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: '',
-    building: '',
-    room_number: '',
+    name: "",
+    building: "",
+    room_number: "",
     is_active: true,
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const change = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    setForm({ ...form, [e.target.name]: value })
-  }
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setForm({ ...form, [e.target.name]: value });
+  };
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await client.post('/rooms', form)
-      navigate('/rooms')
+      await client.post("/rooms", form);
+      navigate("/rooms");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal menyimpan data')
+      setError(err.response?.data?.message || "Gagal menyimpan data");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container-sm">
@@ -88,7 +89,10 @@ export default function RoomCreate() {
             />
           </div>
 
-          <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div
+            className="form-group"
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+          >
             <input
               type="checkbox"
               id="is_active"
@@ -96,14 +100,21 @@ export default function RoomCreate() {
               checked={Boolean(form.is_active)}
               onChange={change}
             />
-            <label htmlFor="is_active" style={{ marginBottom: 0 }}>Ruangan Aktif</label>
+            <label htmlFor="is_active" style={{ marginBottom: 0 }}>
+              Ruangan Aktif
+            </label>
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Menyimpan...' : 'Simpan'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Menyimpan..." : "Simpan"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

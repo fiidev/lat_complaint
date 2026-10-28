@@ -1,55 +1,55 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { client } from '../../lib/client'
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 export default function ComplaintCreate() {
-  const navigate = useNavigate()
-  const [rooms, setRooms] = useState([])
-  const [categories, setCategories] = useState([])
+  const navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({
-    title: '',
-    room_id: '',
-    category_id: '',
-    description: '',
-  })
-  const [file, setFile] = useState(null)
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+    title: "",
+    room_id: "",
+    category_id: "",
+    description: "",
+  });
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    Promise.all([client.get('/rooms'), client.get('/complaint-categories')])
+    Promise.all([client.get("/rooms"), client.get("/complaint-categories")])
       .then(([resRooms, resCats]) => {
-        setRooms(resRooms.data.data)
-        setCategories(resCats.data.data)
+        setRooms(resRooms.data.data);
+        setCategories(resCats.data.data);
       })
-      .catch(() => setError('Gagal memuat pilihan ruangan atau kategori'))
-  }, [])
+      .catch(() => setError("Gagal memuat pilihan ruangan atau kategori"));
+  }, []);
 
-  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const payload = new FormData()
-    payload.append('title', form.title)
-    payload.append('room_id', form.room_id)
-    payload.append('category_id', form.category_id)
-    payload.append('description', form.description)
+    const payload = new FormData();
+    payload.append("title", form.title);
+    payload.append("room_id", form.room_id);
+    payload.append("category_id", form.category_id);
+    payload.append("description", form.description);
     if (file) {
-      payload.append('evidence_image', file)
+      payload.append("evidence_image", file);
     }
 
     try {
-      await client.post('/complaints', payload)
-      navigate('/complaints')
+      await client.post("/complaints", payload);
+      navigate("/complaints");
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal mengirim aduan')
+      setError(err.response?.data?.message || "Gagal mengirim aduan");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container-sm">
@@ -142,11 +142,16 @@ export default function ComplaintCreate() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: '1.5rem' }}>
-            {loading ? 'Mengirim...' : 'Kirim'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+            style={{ marginTop: "1.5rem" }}
+          >
+            {loading ? "Mengirim..." : "Kirim"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }
